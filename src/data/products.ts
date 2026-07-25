@@ -618,6 +618,30 @@ export const products: Product[] = [
     isNew: true,
     isBestseller: true,
   },
+  {
+    id: "23",
+    name: "Dove Necklace Set",
+    category: "anti-tarnish",
+    categories: ["anti-tarnish", "necklaces"],
+    price: 1499,
+    description:
+      "Delicate, timeless, and effortlessly elegant, the Dove Necklace Set features beautifully crafted dual rose motifs accented with luminous pearls and sparkling zircon stones. Made from premium stainless steel with durable PVD gold plating, it is water-resistant, hypoallergenic, and designed to retain its shine with minimal care. Lightweight and comfortable, Dove complements both everyday outfits and special-occasion looks.",
+    details: [
+      "Design: Dual rose motifs with pearl detailing and zircon accents",
+      "Material: Premium stainless steel with PVD gold plating",
+      "Properties: Anti-tarnish, water-resistant, hypoallergenic",
+      "Includes: Necklace + matching earrings",
+      "Why You'll Love It: An elegant coordinated set with long-lasting shine, lightweight comfort, and versatile styling",
+    ],
+    images: [
+      "/products/Dove/dove-1.png",
+      "/products/Dove/dove-2.png",
+      "/products/Dove/dove-3.png",
+      "/products/Dove/dove-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
 ];
 
 export function getProductsByCategory(category: Category): Product[] {
