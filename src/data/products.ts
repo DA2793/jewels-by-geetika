@@ -642,6 +642,54 @@ export const products: Product[] = [
     badge: "New Launch",
     isNew: true,
   },
+  {
+    id: "24",
+    name: "Halo Pendant",
+    category: "anti-tarnish",
+    categories: ["anti-tarnish", "necklaces"],
+    price: 1199,
+    description:
+      "A timeless expression of elegance, the Halo Pendant features a graceful row of brilliant princess-cut stones set on a sleek gold-tone snake chain. Crafted from premium stainless steel with 18K gold PVD plating, this lightweight piece is water-resistant, anti-tarnish, hypoallergenic, and designed for comfortable everyday wear.",
+    details: [
+      "Design: Princess-cut cubic zirconia stones on a sleek snake chain",
+      "Material: Premium stainless steel with 18K gold PVD plating",
+      "Properties: Anti-tarnish, water-resistant, hypoallergenic, skin-friendly",
+      "Occasion: Everyday wear, parties, weddings, and festive celebrations",
+      "Why You'll Love It: A versatile, lightweight pendant with lasting shine and effortless sparkle",
+    ],
+    images: [
+      "/products/Halo/Halo-1.png",
+      "/products/Halo/Halo-2.png",
+      "/products/Halo/Halo-3.png",
+      "/products/Halo/Halo-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
+  {
+    id: "25",
+    name: "Trinity Pendant",
+    category: "anti-tarnish",
+    categories: ["anti-tarnish", "necklaces"],
+    price: 1199,
+    description:
+      "Gracefully designed with three beautifully aligned emerald-cut crystals, the Trinity Pendant brings together minimalism and sophistication. Its sleek vertical silhouette is crafted from stainless steel with 18K gold PVD coating for lasting shine. Water-resistant, anti-tarnish, hypoallergenic, and lightweight, it elevates everyday outfits and special-occasion looks with understated sparkle.",
+    details: [
+      "Design: Three emerald-cut crystals in a sleek vertical setting",
+      "Material: Stainless steel with 18K gold PVD coating",
+      "Properties: Anti-tarnish, water-resistant, hypoallergenic",
+      "Fit: Adjustable chain for comfortable everyday wear",
+      "Why You'll Love It: A refined, lightweight pendant with timeless sparkle and versatile styling",
+    ],
+    images: [
+      "/products/Trinity/Trinity-1.png",
+      "/products/Trinity/Trinity-2.png",
+      "/products/Trinity/Trinity-3.png",
+      "/products/Trinity/Trinity-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
 ];
 
 export function getProductsByCategory(category: Category): Product[] {
