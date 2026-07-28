@@ -690,6 +690,30 @@ export const products: Product[] = [
     badge: "New Launch",
     isNew: true,
   },
+  {
+    id: "26",
+    name: "Sundrop Earrings",
+    category: "earrings",
+    categories: ["earrings", "anti-tarnish"],
+    price: 1499,
+    description:
+      "Designed to catch the light with every movement, the anti-tarnish Sundrop Earrings feature a deep ruby-cut crystal complemented by layers of shimmering gold disc tassels. Their cascading silhouette creates a fluid, elegant effect that brings effortless glamour to festive celebrations, weddings, cocktail parties, and evening outings while remaining lightweight and comfortable to wear.",
+    details: [
+      "Design: Cascading gold disc tassels with a ruby-cut crystal",
+      "Material: Crystal stone, gold disc tassels, and alloy",
+      "Finish: Anti-tarnish polished gold tone with a luminous, fluid effect",
+      "Occasion: Weddings, festive celebrations, parties, and evening events",
+      "Why You'll Love It: Statement-making movement and sparkle in a lightweight, comfortable design",
+    ],
+    images: [
+      "/products/Sundrop/Sundrop-1.png",
+      "/products/Sundrop/Sundrop-2.png",
+      "/products/Sundrop/Sundrop-3.png",
+      "/products/Sundrop/Sundrop-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
 ];
 
 export function getProductsByCategory(category: Category): Product[] {
