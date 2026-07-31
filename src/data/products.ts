@@ -714,6 +714,54 @@ export const products: Product[] = [
     badge: "New Launch",
     isNew: true,
   },
+  {
+    id: "27",
+    name: "Evergreen Pendant",
+    category: "anti-tarnish",
+    categories: ["anti-tarnish", "necklaces"],
+    price: 1199,
+    description:
+      "Inspired by nature's timeless beauty, the Evergreen Pendant features two radiant emerald-green faceted stones delicately suspended on a sleek gold-tone chain, creating a sophisticated cascading silhouette. Crafted from 18K gold plated stainless steel with an anti-tarnish finish, it is water-resistant, hypoallergenic, and nickel-free — perfect worn alone or layered, transitioning seamlessly from day to night.",
+    details: [
+      "Design: Double teardrop drops with emerald-green faceted crystals",
+      "Material: 18K gold plated stainless steel with faceted crystal stones",
+      "Properties: Anti-tarnish, water-resistant, hypoallergenic, nickel-free",
+      "Chain: Fine cable chain with lobster clasp closure",
+      "Why You'll Love It: A lightweight, versatile pendant with rich emerald tones and lasting shine",
+    ],
+    images: [
+      "/products/Evergreen/evergreen-1.png",
+      "/products/Evergreen/evergreen-2.png",
+      "/products/Evergreen/evergreen-3.png",
+      "/products/Evergreen/evergreen-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
+  {
+    id: "28",
+    name: "Loveknot Pendant",
+    category: "anti-tarnish",
+    categories: ["anti-tarnish", "necklaces"],
+    price: 1199,
+    description:
+      "A delicate symbol of love and timeless style, the Loveknot Pendant features a graceful bow paired with a polished heart charm on a sleek snake chain. Crafted from premium stainless steel with 18K gold plating and an anti-tarnish finish, it is water-resistant, hypoallergenic, and lightweight — a minimal yet eye-catching piece that adds a feminine touch to every outfit.",
+    details: [
+      "Design: Bow and heart charm pendant with high-shine finish",
+      "Material: Premium stainless steel with 18K gold plating",
+      "Properties: Anti-tarnish, water-resistant, hypoallergenic, lightweight",
+      "Chain: Premium snake chain with lobster clasp closure",
+      "Why You'll Love It: An elegant everyday piece and a thoughtful gift for birthdays, anniversaries, or someone special",
+    ],
+    images: [
+      "/products/Loveknot/loveknot-1.png",
+      "/products/Loveknot/loveknot-2.png",
+      "/products/Loveknot/loveknot-3.png",
+      "/products/Loveknot/loveknot-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
 ];
 
 export function getProductsByCategory(category: Category): Product[] {
