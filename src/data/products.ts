@@ -721,10 +721,10 @@ export const products: Product[] = [
     categories: ["anti-tarnish", "necklaces"],
     price: 1199,
     description:
-      "Inspired by nature's timeless beauty, the Evergreen Pendant features two radiant emerald-green faceted stones delicately suspended on a sleek gold-tone chain, creating a sophisticated cascading silhouette. Crafted from 18K gold plated stainless steel with an anti-tarnish finish, it is water-resistant, hypoallergenic, and nickel-free — perfect worn alone or layered, transitioning seamlessly from day to night.",
+      "Inspired by nature's timeless beauty, the Evergreen Pendant features two radiant emerald-green faceted stones delicately suspended on a sleek gold-tone chain, creating a sophisticated cascading silhouette. Crafted from anti-tarnish stainless steel, it is water-resistant, hypoallergenic, and nickel-free — perfect worn alone or layered, transitioning seamlessly from day to night.",
     details: [
       "Design: Double teardrop drops with emerald-green faceted crystals",
-      "Material: 18K gold plated stainless steel with faceted crystal stones",
+      "Material: Anti-tarnish stainless steel with faceted crystal stones",
       "Properties: Anti-tarnish, water-resistant, hypoallergenic, nickel-free",
       "Chain: Fine cable chain with lobster clasp closure",
       "Why You'll Love It: A lightweight, versatile pendant with rich emerald tones and lasting shine",
@@ -745,10 +745,10 @@ export const products: Product[] = [
     categories: ["anti-tarnish", "necklaces"],
     price: 1199,
     description:
-      "A delicate symbol of love and timeless style, the Loveknot Pendant features a graceful bow paired with a polished heart charm on a sleek snake chain. Crafted from premium stainless steel with 18K gold plating and an anti-tarnish finish, it is water-resistant, hypoallergenic, and lightweight — a minimal yet eye-catching piece that adds a feminine touch to every outfit.",
+      "A delicate symbol of love and timeless style, the Loveknot Pendant features a graceful bow paired with a polished heart charm on a sleek snake chain. Crafted from premium stainless steel with an anti-tarnish finish, it is water-resistant, hypoallergenic, and lightweight — a minimal yet eye-catching piece that adds a feminine touch to every outfit.",
     details: [
       "Design: Bow and heart charm pendant with high-shine finish",
-      "Material: Premium stainless steel with 18K gold plating",
+      "Material: Premium stainless steel with anti-tarnish finish",
       "Properties: Anti-tarnish, water-resistant, hypoallergenic, lightweight",
       "Chain: Premium snake chain with lobster clasp closure",
       "Why You'll Love It: An elegant everyday piece and a thoughtful gift for birthdays, anniversaries, or someone special",
@@ -758,6 +758,30 @@ export const products: Product[] = [
       "/products/Loveknot/loveknot-2.png",
       "/products/Loveknot/loveknot-3.png",
       "/products/Loveknot/loveknot-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
+  {
+    id: "29",
+    name: "Duet Necklace",
+    category: "anti-tarnish",
+    categories: ["anti-tarnish", "necklaces"],
+    price: 1199,
+    description:
+      "A timeless symbol of love, beautifully reimagined. The Duet Necklace features two polished heart charms suspended from delicate double-layered snake chains, accented with sleek gold-toned beads for a modern yet sophisticated finish. Crafted from premium Korea-imported stainless steel with an anti-tarnish finish, it is waterproof, lightweight, and designed to retain its shine through everyday wear — effortlessly chic worn alone or layered.",
+    details: [
+      "Design: Double-layered snake chains with two polished heart charms",
+      "Material: Korea-imported stainless steel with anti-tarnish finish",
+      "Properties: Anti-tarnish, waterproof, lightweight",
+      "Occasion: Everyday styling, brunches, date nights, office wear, vacations, festive occasions",
+      "Why You'll Love It: A minimal, timeless layered look — and a thoughtful gift for birthdays, anniversaries, or someone special",
+    ],
+    images: [
+      "/products/Duet/duet-1.png",
+      "/products/Duet/duet-2.png",
+      "/products/Duet/duet-3.png",
+      "/products/Duet/duet-4.png",
     ],
     badge: "New Launch",
     isNew: true,
