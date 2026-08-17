@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/client";
 export interface PromoCode {
   id: string;
   code: string;
-  type: "percentage" | "flat";
+  type: "percentage" | "flat" | "price_to";
   value: number;
   min_order: number;
   max_discount: number | null;
@@ -60,6 +60,12 @@ export async function validatePromoCode(
     if (promo.max_discount && discount > promo.max_discount) {
       discount = promo.max_discount;
     }
+  } else if (promo.type === "price_to") {
+    // Sets the order subtotal to a fixed price (e.g., FLAT999 → pay ₹999)
+    if (orderTotal <= promo.value) {
+      return { valid: false, error: `This code applies on orders above ₹${promo.value}` };
+    }
+    discount = orderTotal - promo.value;
   } else {
     discount = promo.value;
   }
