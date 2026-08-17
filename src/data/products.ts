@@ -786,6 +786,30 @@ export const products: Product[] = [
     badge: "New Launch",
     isNew: true,
   },
+  {
+    id: "30",
+    name: "Aarvi Bracelet & Ring Set",
+    category: "bracelets",
+    categories: ["bracelets", "rings", "anti-tarnish"],
+    price: 1249,
+    description:
+      "A timeless statement of elegance, the Aarvi Bracelet & Ring Set is crafted with Korea-imported, premium-quality materials and finished with an anti-tarnish coating for lasting shine. The intricate design and delicate sparkle of CZ stones make it a versatile addition to your jewellery collection — effortlessly complementing both traditional and contemporary outfits, perfect for festive occasions, celebrations, or elevating everyday looks.",
+    details: [
+      "Design: Intricate detailing with delicate CZ stone sparkle",
+      "Material: Korea-imported alloy with CZ stones",
+      "Finish: Anti-tarnish coating for long-lasting radiance",
+      "Includes: Bracelet + matching ring",
+      "Why You'll Love It: Elegant detailing and radiant finish — just the right amount of sparkle for every occasion",
+    ],
+    images: [
+      "/products/Aarvi/aarvi-1.png",
+      "/products/Aarvi/aarvi-2.png",
+      "/products/Aarvi/aarvi-3.png",
+      "/products/Aarvi/aarvi-4.png",
+    ],
+    badge: "New Launch",
+    isNew: true,
+  },
 ];
 
 export function getProductsByCategory(category: Category): Product[] {
