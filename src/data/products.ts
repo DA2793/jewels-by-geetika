@@ -836,7 +836,17 @@ export function getFeaturedProducts(): Product[] {
     [featured[i], featured[j]] = [featured[j], featured[i]];
   }
   return featured.slice(0, 6);
-}export function getNewArrivals(): Product[] {
+}export function getShuffledProducts(): Product[] {
+  const shuffled = [...products];
+  // Fisher-Yates shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+export function getNewArrivals(): Product[] {
   return products.filter((p) => p.isNew);
 }
 

@@ -3,7 +3,7 @@
 import { Suspense, useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { products, categories, Category } from "@/data/products";
+import { products, categories, Category, getShuffledProducts } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 
 function CollectionsContent() {
@@ -12,6 +12,12 @@ function CollectionsContent() {
   const [showNewOnly, setShowNewOnly] = useState(false);
   const [showBestsellers, setShowBestsellers] = useState(false);
   const [sortBy, setSortBy] = useState<"default" | "price-low" | "price-high">("default");
+  const [displayProducts, setDisplayProducts] = useState(products);
+
+  // Shuffle after mount to avoid hydration mismatch with the prerendered page
+  useEffect(() => {
+    setDisplayProducts(getShuffledProducts());
+  }, []);
 
   useEffect(() => {
     const cat = searchParams.get("category") as Category | null;
@@ -24,8 +30,8 @@ function CollectionsContent() {
   const filteredProducts = useMemo(() => {
     let filtered =
       activeCategory === "all"
-        ? products
-        : products.filter((p) => p.category === activeCategory || p.categories?.includes(activeCategory));
+        ? displayProducts
+        : displayProducts.filter((p) => p.category === activeCategory || p.categories?.includes(activeCategory));
 
     if (showNewOnly) {
       filtered = filtered.filter((p) => p.isNew);
@@ -42,7 +48,7 @@ function CollectionsContent() {
     }
 
     return filtered;
-  }, [activeCategory, showNewOnly, showBestsellers, sortBy]);
+  }, [displayProducts, activeCategory, showNewOnly, showBestsellers, sortBy]);
 
   return (
     <>
