@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from "react";
-import { Product } from "@/data/products";
+import { Product, getProductById } from "@/data/products";
 import { createClient } from "@/lib/supabase/client";
 import { getAllStock } from "@/lib/stock";
 
@@ -35,7 +35,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (typeof window === "undefined") return [];
     try {
       const saved = localStorage.getItem("jbg-cart");
-      return saved ? JSON.parse(saved) : [];
+      const parsed: CartItem[] = saved ? JSON.parse(saved) : [];
+      // Re-resolve products from the current catalog so saved carts never
+      // carry stale prices/images; drop items that no longer exist.
+      return parsed
+        .map((item) => {
+          const current = getProductById(item?.product?.id);
+          const quantity = Number(item?.quantity);
+          if (!current || !Number.isInteger(quantity) || quantity < 1) return null;
+          return { product: current, quantity };
+        })
+        .filter((item): item is CartItem => item !== null);
     } catch {
       return [];
     }
