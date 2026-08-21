@@ -10,7 +10,6 @@ import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
-import { getStock } from "@/lib/stock";
 
 function ImageZoomModal({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
   const [scale, setScale] = useState(1);
@@ -206,13 +205,11 @@ export default function ProductDetailPage() {
   const product = getProductById(params.id as string);
   const [selectedImage, setSelectedImage] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
-  const { addToCart } = useCart();
-  const [stockQty, setStockQty] = useState<number | null>(null);
+  const { addToCart, stockLevels } = useCart();
 
   const productId = params.id as string;
-  useEffect(() => {
-    getStock(productId).then(setStockQty);
-  }, [productId]);
+  // Shared stock map from CartContext (null while loading)
+  const stockQty = stockLevels === null ? null : stockLevels[productId] ?? 0;
 
   if (!product) {
     return (
