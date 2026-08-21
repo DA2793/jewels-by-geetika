@@ -59,6 +59,7 @@ export default function AdminPage() {
   const [loadingData, setLoadingData] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [trackingDrafts, setTrackingDrafts] = useState<Record<string, { tracking: string; courier: string }>>({});
 
   // Auth check
   useEffect(() => {
@@ -357,24 +358,43 @@ export default function AdminPage() {
                             <input
                               type="text"
                               placeholder="Tracking number"
-                              defaultValue={order.tracking_number || ""}
+                              aria-label={`Tracking number for order ${order.id.slice(0, 8)}`}
+                              value={trackingDrafts[order.id]?.tracking ?? order.tracking_number ?? ""}
+                              onChange={(e) =>
+                                setTrackingDrafts((prev) => ({
+                                  ...prev,
+                                  [order.id]: {
+                                    tracking: e.target.value,
+                                    courier: prev[order.id]?.courier ?? order.courier_partner ?? "",
+                                  },
+                                }))
+                              }
                               className="flex-1 bg-white border border-cream-400 rounded-xl px-4 py-2 text-sm text-charcoal-800 focus:outline-none focus:border-gold-400"
-                              id={`tracking-${order.id}`}
                               onClick={(e) => e.stopPropagation()}
                             />
                             <input
                               type="text"
                               placeholder="Courier"
-                              defaultValue={order.courier_partner || ""}
+                              aria-label={`Courier partner for order ${order.id.slice(0, 8)}`}
+                              value={trackingDrafts[order.id]?.courier ?? order.courier_partner ?? ""}
+                              onChange={(e) =>
+                                setTrackingDrafts((prev) => ({
+                                  ...prev,
+                                  [order.id]: {
+                                    tracking: prev[order.id]?.tracking ?? order.tracking_number ?? "",
+                                    courier: e.target.value,
+                                  },
+                                }))
+                              }
                               className="w-32 bg-white border border-cream-400 rounded-xl px-4 py-2 text-sm text-charcoal-800 focus:outline-none focus:border-gold-400"
-                              id={`courier-${order.id}`}
                               onClick={(e) => e.stopPropagation()}
                             />
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                const tracking = (document.getElementById(`tracking-${order.id}`) as HTMLInputElement)?.value;
-                                const courier = (document.getElementById(`courier-${order.id}`) as HTMLInputElement)?.value;
+                                const draft = trackingDrafts[order.id];
+                                const tracking = draft?.tracking ?? order.tracking_number ?? "";
+                                const courier = draft?.courier ?? order.courier_partner ?? "";
                                 if (tracking) updateTracking(order.id, tracking, courier);
                               }}
                               className="px-4 py-2 bg-charcoal-900 text-white text-xs uppercase tracking-wider rounded-xl hover:bg-gold-600 transition-colors"

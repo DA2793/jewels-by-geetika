@@ -5,8 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
-import { useState, useEffect } from "react";
-import { getStock } from "@/lib/stock";
+import { useState, useRef, useEffect } from "react";
 import WishlistButton from "./WishlistButton";
 
 interface ProductCardProps {
@@ -14,20 +13,31 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useCart();
+  const { addToCart, stockLevels } = useCart();
+  const [limitMessage, setLimitMessage] = useState("");
+  const limitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Shared stock map from CartContext — no per-card queries.
+  // null = still loading → don't show "Sold Out" prematurely.
+  const outOfStock = stockLevels !== null && (stockLevels[product.id] ?? 0) <= 0;
+
+  useEffect(() => {
+    return () => {
+      if (limitTimer.current) clearTimeout(limitTimer.current);
+    };
+  }, []);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (outOfStock) return;
-    addToCart(product);
+    const result = addToCart(product);
+    if (result === "stock-limit") {
+      setLimitMessage("Max quantity already in bag");
+      if (limitTimer.current) clearTimeout(limitTimer.current);
+      limitTimer.current = setTimeout(() => setLimitMessage(""), 2500);
+    }
   };
-
-  const [outOfStock, setOutOfStock] = useState(false);
-
-  useEffect(() => {
-    getStock(product.id).then((qty) => setOutOfStock(qty <= 0));
-  }, [product.id]);
 
   return (
     <Link href={`/product/${product.id}`}>
@@ -60,8 +70,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
 
-          {/* Wishlist */}
-          <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Wishlist — always visible on touch, hover-reveal on pointer devices */}
+          <div className="absolute top-4 right-4 z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity duration-300">
             <WishlistButton productId={product.id} size="sm" />
           </div>
 
@@ -72,11 +82,19 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
 
-          {/* Quick View — only when in stock */}
+          {/* Stock limit feedback */}
+          {limitMessage && (
+            <div className="absolute bottom-16 left-4 right-4 text-center py-2 bg-charcoal-800/90 text-white text-[11px] uppercase tracking-wider rounded-full backdrop-blur-sm" role="status">
+              {limitMessage}
+            </div>
+          )}
+
+          {/* Add to Bag — always visible on touch, hover-reveal on pointer devices */}
           {!outOfStock && (
-          <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+          <div className="absolute bottom-4 left-4 right-4 opacity-100 translate-y-0 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 md:translate-y-2 md:group-hover:translate-y-0 transition-all duration-500">
             <button
               onClick={handleAddToCart}
+              aria-label={`Add ${product.name} to bag`}
               className="block w-full text-center py-3 glass-subtle text-xs font-medium uppercase tracking-[0.15em] transition-colors text-charcoal-800 hover:bg-charcoal-800 hover:text-white"
             >
               Add to Bag

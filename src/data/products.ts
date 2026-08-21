@@ -11,34 +11,9 @@ export interface Product {
   badge?: string;
   isNew?: boolean;
   isBestseller?: boolean;
-  stock?: number;
 }
 
-// Stock levels - update these when restocking
-const stockLevels: Record<string, number> = {
-  "1": 2,  // Kaveri
-  "2": 1,  // Raahi
-  "3": 2,  // Saanjh
-  "4": 2,  // Adaa
-  "5": 2,  // Ruhani
-  "6": 2,  // Kanak
-  "7": 2,  // Sunehri
-  "8": 1,  // Virasat
-  "9": 2,  // Antara
-  "10": 2, // Chandni
-  "11": 2, // Rajsi
-  "12": 2, // Bella
-  "13": 2, // Blossom
-  "14": 2, // Ziya
-  "15": 1, // Grace
-  "16": 2, // Iris
-  "17": 2, // Stella
-  "18": 2, // Hope
-  "19": 2, // Luna
-  "20": 2, // Lily
-  "21": 2, // Daisy
-  "22": 2, // Zahara
-};
+// NOTE: Stock is managed in Supabase (see src/lib/stock.ts), not here.
 
 export type Category =
   | "necklaces"
@@ -54,43 +29,43 @@ export const categories: { slug: Category; name: string; description: string; im
     slug: "necklaces",
     name: "Necklaces",
     description: "Elegant necklaces crafted with precision, from chokers to long layered pieces",
-    image: "/products/Kaveri/kaveri-1.png",
+    image: "/products/Kaveri/kaveri-1.webp",
   },
   {
     slug: "bridal-sets",
     name: "Bridal Sets",
     description: "Complete bridal jewellery sets for your most special day",
-    image: "/products/Saanjh/saanjh-1.png",
+    image: "/products/Saanjh/saanjh-1.webp",
   },
   {
     slug: "anti-tarnish",
     name: "Anti Tarnish",
     description: "Long-lasting jewellery with anti-tarnish coating — stays beautiful wear after wear",
-    image: "/products/Bella/bella-1.png",
+    image: "/products/Bella/bella-1.webp",
   },
   {
     slug: "american-diamond",
     name: "American Diamond",
     description: "Sparkling AD stone jewellery that captures the brilliance of real diamonds",
-    image: "/products/Ruhani/ruhani-1.png",
+    image: "/products/Ruhani/ruhani-1.webp",
   },
   {
     slug: "bracelets",
     name: "Bracelets",
     description: "Statement bracelets and bangles crafted with premium finishes for everyday luxury",
-    image: "/products/Zahara/zahara-1.png",
+    image: "/products/Zahara/zahara-1.webp",
   },
   {
     slug: "earrings",
     name: "Earrings",
     description: "Statement earrings that add the perfect finishing touch to every look",
-    image: "/products/Ziya/ziya-1.png",
+    image: "/products/Ziya/ziya-1.webp",
   },
   {
     slug: "rings",
     name: "Rings",
     description: "Exquisite rings from delicate bands to bold cocktail pieces",
-    image: "/products/Virasat/virasat-1.png",
+    image: "/products/Virasat/virasat-1.webp",
   },
 ];
 
@@ -111,12 +86,11 @@ export const products: Product[] = [
       "Why You'll Love It: A celebration of elegance, femininity, and timeless Indian craftsmanship",
     ],
     images: [
-      "/products/Kaveri/kaveri-1.png",
-      "/products/Kaveri/kaveri-2.png",
-      "/products/Kaveri/kaveri-3.png",
-      "/products/Kaveri/kaveri-4.png",
+      "/products/Kaveri/kaveri-1.webp",
+      "/products/Kaveri/kaveri-2.webp",
+      "/products/Kaveri/kaveri-3.webp",
+      "/products/Kaveri/kaveri-4.webp",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -135,12 +109,11 @@ export const products: Product[] = [
       "Why You'll Love It: Grace, royalty, and timeless elegance — perfect for weddings and celebrations",
     ],
     images: [
-      "/products/Raahi/raahi-1.png",
-      "/products/Raahi/raahi-2.png",
-      "/products/Raahi/raahi-3.png",
-      "/products/Raahi/raahi-4.png",
+      "/products/Raahi/raahi-1.webp",
+      "/products/Raahi/raahi-2.webp",
+      "/products/Raahi/raahi-3.webp",
+      "/products/Raahi/raahi-4.webp",
     ],
-    // badge removed,
   },
   {
     id: "3",
@@ -158,12 +131,11 @@ export const products: Product[] = [
       "Why You'll Love It: Royal Indian artistry that brings effortless grandeur to every outfit",
     ],
     images: [
-      "/products/Saanjh/saanjh-1.png",
-      "/products/Saanjh/saanjh-2.png",
-      "/products/Saanjh/saanjh-3.png",
-      "/products/Saanjh/saanjh-4.png",
+      "/products/Saanjh/saanjh-1.webp",
+      "/products/Saanjh/saanjh-2.webp",
+      "/products/Saanjh/saanjh-3.webp",
+      "/products/Saanjh/saanjh-4.webp",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -182,12 +154,11 @@ export const products: Product[] = [
       "Why You'll Love It: Rich ruby tones, intricate AD craftsmanship, and regal paisley silhouette",
     ],
     images: [
-      "/products/Adaa/adaa-1.png",
-      "/products/Adaa/adaa-2.png",
-      "/products/Adaa/adaa-3.png",
-      "/products/Adaa/adaa-4.png",
+      "/products/Adaa/adaa-1.webp",
+      "/products/Adaa/adaa-2.webp",
+      "/products/Adaa/adaa-3.webp",
+      "/products/Adaa/adaa-4.webp",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -206,12 +177,11 @@ export const products: Product[] = [
       "Why You'll Love It: Sparkling diamond-like brilliance paired with deep emerald tones for a rich luxurious appeal",
     ],
     images: [
-      "/products/Ruhani/ruhani-1.png",
-      "/products/Ruhani/ruhani-2.png",
-      "/products/Ruhani/ruhani-3.png",
-      "/products/Ruhani/ruhani-4.png",
+      "/products/Ruhani/ruhani-1.webp",
+      "/products/Ruhani/ruhani-2.webp",
+      "/products/Ruhani/ruhani-3.webp",
+      "/products/Ruhani/ruhani-4.webp",
     ],
-    // badge removed,
   },
   {
     id: "6",
@@ -229,12 +199,11 @@ export const products: Product[] = [
       "Why You'll Love It: Timeless Indian craftsmanship that feels classic, sophisticated, and unforgettable",
     ],
     images: [
-      "/products/Kanak/kanak-1.png",
-      "/products/Kanak/kanak-2.png",
-      "/products/Kanak/kanak-3.png",
-      "/products/Kanak/kanak-4.png",
+      "/products/Kanak/kanak-1.webp",
+      "/products/Kanak/kanak-2.webp",
+      "/products/Kanak/kanak-3.webp",
+      "/products/Kanak/kanak-4.webp",
     ],
-    // badge removed,
   },
   {
     id: "7",
@@ -251,12 +220,11 @@ export const products: Product[] = [
       "Why You'll Love It: Heritage elegance with bold femininity — a true conversation piece",
     ],
     images: [
-      "/products/Sunehri/sunehri-1.png",
-      "/products/Sunehri/sunehri-2.png",
-      "/products/Sunehri/sunehri-3.png",
-      "/products/Sunehri/sunehri-4.png",
+      "/products/Sunehri/sunehri-1.webp",
+      "/products/Sunehri/sunehri-2.webp",
+      "/products/Sunehri/sunehri-3.webp",
+      "/products/Sunehri/sunehri-4.webp",
     ],
-    // badge removed,
   },
   {
     id: "8",
@@ -273,12 +241,11 @@ export const products: Product[] = [
       "Why You'll Love It: Culture, elegance, and timeless beauty — a statement of artistic tradition",
     ],
     images: [
-      "/products/Virasat/virasat-1.png",
-      "/products/Virasat/virasat-2.png",
-      "/products/Virasat/virasat-3.png",
-      "/products/Virasat/virasat-4.png",
+      "/products/Virasat/virasat-1.webp",
+      "/products/Virasat/virasat-2.webp",
+      "/products/Virasat/virasat-3.webp",
+      "/products/Virasat/virasat-4.webp",
     ],
-    // badge removed,
   },
   {
     id: "9",
@@ -296,12 +263,11 @@ export const products: Product[] = [
       "Why You'll Love It: Heritage artistry with regal elegance — perfect for weddings, poojas, and grand celebrations",
     ],
     images: [
-      "/products/Antara/antara-1.png",
-      "/products/Antara/antara-2.png",
-      "/products/Antara/antara-3.png",
-      "/products/Antara/antara-4.png",
+      "/products/Antara/antara-1.webp",
+      "/products/Antara/antara-2.webp",
+      "/products/Antara/antara-3.webp",
+      "/products/Antara/antara-4.webp",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -320,12 +286,11 @@ export const products: Product[] = [
       "Why You'll Love It: Bold emerald contrast with shimmering AD — contemporary yet timeless",
     ],
     images: [
-      "/products/Chandni/chandni-1.png",
-      "/products/Chandni/chandni-2.png",
-      "/products/Chandni/chandni-3.png",
-      "/products/Chandni/chandni-4.png",
+      "/products/Chandni/chandni-1.webp",
+      "/products/Chandni/chandni-2.webp",
+      "/products/Chandni/chandni-3.webp",
+      "/products/Chandni/chandni-4.webp",
     ],
-    // badge removed,
   },
   {
     id: "11",
@@ -343,12 +308,11 @@ export const products: Product[] = [
       "Why You'll Love It: Royal peacock artistry with sophisticated sparkle — perfect for weddings and celebrations",
     ],
     images: [
-      "/products/Rajsi/rajsi-1.png",
-      "/products/Rajsi/rajsi-2.png",
-      "/products/Rajsi/rajsi-3.png",
-      "/products/Rajsi/rajsi-4.png",
+      "/products/Rajsi/rajsi-1.webp",
+      "/products/Rajsi/rajsi-2.webp",
+      "/products/Rajsi/rajsi-3.webp",
+      "/products/Rajsi/rajsi-4.webp",
     ],
-    // badge removed,
   },
   {
     id: "12",
@@ -366,10 +330,10 @@ export const products: Product[] = [
       "Why You'll Love It: Striking statement design with premium anti-tarnish quality — lightweight, comfortable, and effortlessly stylish",
     ],
     images: [
-      "/products/Bella/bella-1.png",
-      "/products/Bella/bella-2.png",
-      "/products/Bella/bella-3.png",
-      "/products/Bella/bella-4.png",
+      "/products/Bella/bella-1.webp",
+      "/products/Bella/bella-2.webp",
+      "/products/Bella/bella-3.webp",
+      "/products/Bella/bella-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -391,10 +355,10 @@ export const products: Product[] = [
       "Why You'll Love It: Bold yet graceful floral design with anti-tarnish quality — lightweight, minimal maintenance, and effortlessly elegant",
     ],
     images: [
-      "/products/Blossom/blossom-1.png",
-      "/products/Blossom/blossom-2.png",
-      "/products/Blossom/blossom-3.png",
-      "/products/Blossom/blossom-4.png",
+      "/products/Blossom/blossom-1.webp",
+      "/products/Blossom/blossom-2.webp",
+      "/products/Blossom/blossom-3.webp",
+      "/products/Blossom/blossom-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -415,10 +379,10 @@ export const products: Product[] = [
       "Why You'll Love It: Dreamy pearl and crystal elegance with anti-tarnish durability — lightweight, feminine, and effortlessly luxe",
     ],
     images: [
-      "/products/Ziya/ziya-1.png",
-      "/products/Ziya/ziya-2.png",
-      "/products/Ziya/ziya-3.png",
-      "/products/Ziya/ziya-4.png",
+      "/products/Ziya/ziya-1.webp",
+      "/products/Ziya/ziya-2.webp",
+      "/products/Ziya/ziya-3.webp",
+      "/products/Ziya/ziya-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -439,10 +403,10 @@ export const products: Product[] = [
       "Why You'll Love It: Bold glamour meets feminine elegance — luxurious finish, graceful movement, and timeless floral charm",
     ],
     images: [
-      "/products/Grace/grace-1.png",
-      "/products/Grace/grace-2.png",
-      "/products/Grace/grace-3.png",
-      "/products/Grace/grace-4.png",
+      "/products/Grace/grace-1.webp",
+      "/products/Grace/grace-2.webp",
+      "/products/Grace/grace-3.webp",
+      "/products/Grace/grace-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -464,10 +428,10 @@ export const products: Product[] = [
       "Why You'll Love It: Bold artistic design with high-fashion appeal — lightweight, dramatic, and a true conversation starter",
     ],
     images: [
-      "/products/Iris/iris-1.png",
-      "/products/Iris/iris-2.png",
-      "/products/Iris/iris-3.png",
-      "/products/Iris/iris-4.png",
+      "/products/Iris/iris-1.webp",
+      "/products/Iris/iris-2.webp",
+      "/products/Iris/iris-3.webp",
+      "/products/Iris/iris-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -488,10 +452,10 @@ export const products: Product[] = [
       "Why You'll Love It: Sparkling multi-layered design that catches light beautifully — durable, radiant, and impossible to ignore",
     ],
     images: [
-      "/products/Stella/stella-1.png",
-      "/products/Stella/stella-2.png",
-      "/products/Stella/stella-3.png",
-      "/products/Stella/stella-4.png",
+      "/products/Stella/stella-1.webp",
+      "/products/Stella/stella-2.webp",
+      "/products/Stella/stella-3.webp",
+      "/products/Stella/stella-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -513,10 +477,10 @@ export const products: Product[] = [
       "Why You'll Love It: Unique nature-inspired design with long silhouette — lightweight, eye-catching, and timeless season after season",
     ],
     images: [
-      "/products/Hope/hope-1.png",
-      "/products/Hope/hope-2.png",
-      "/products/Hope/hope-3.png",
-      "/products/Hope/hope-4.png",
+      "/products/Hope/hope-1.webp",
+      "/products/Hope/hope-2.webp",
+      "/products/Hope/hope-3.webp",
+      "/products/Hope/hope-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -537,10 +501,10 @@ export const products: Product[] = [
       "Why You'll Love It: Premium Korean craftsmanship with refined finish — lightweight, durable, and effortlessly radiant",
     ],
     images: [
-      "/products/Luna/luna-1.png",
-      "/products/Luna/luna-2.png",
-      "/products/Luna/luna-3.png",
-      "/products/Luna/luna-4.png",
+      "/products/Luna/luna-1.webp",
+      "/products/Luna/luna-2.webp",
+      "/products/Luna/luna-3.webp",
+      "/products/Luna/luna-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -561,10 +525,10 @@ export const products: Product[] = [
       "Why You'll Love It: Effortless versatility with statement appeal — anti-tarnish finish means lasting shine with minimal maintenance",
     ],
     images: [
-      "/products/Lily/lily-1.png",
-      "/products/Lily/lily-2.png",
-      "/products/Lily/lily-3.png",
-      "/products/Lily/lily-4.png",
+      "/products/Lily/lily-1.webp",
+      "/products/Lily/lily-2.webp",
+      "/products/Lily/lily-3.webp",
+      "/products/Lily/lily-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -585,10 +549,10 @@ export const products: Product[] = [
       "Why You'll Love It: Premium stainless steel durability with PVD coating — water-resistant, skin-friendly, and maintains its luxurious golden finish over time",
     ],
     images: [
-      "/products/Daisy/daisy-1.png",
-      "/products/Daisy/daisy-2.png",
-      "/products/Daisy/daisy-3.png",
-      "/products/Daisy/daisy-4.png",
+      "/products/Daisy/daisy-1.webp",
+      "/products/Daisy/daisy-2.webp",
+      "/products/Daisy/daisy-3.webp",
+      "/products/Daisy/daisy-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -609,10 +573,10 @@ export const products: Product[] = [
       "Why You'll Love It: A symbol of confidence, power, and sophistication — long-lasting shine with an eye-catching silhouette that elevates any look",
     ],
     images: [
-      "/products/Zahara/zahara-1.png",
-      "/products/Zahara/zahara-2.png",
-      "/products/Zahara/zahara-3.png",
-      "/products/Zahara/zahara-4.png",
+      "/products/Zahara/zahara-1.webp",
+      "/products/Zahara/zahara-2.webp",
+      "/products/Zahara/zahara-3.webp",
+      "/products/Zahara/zahara-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -634,10 +598,10 @@ export const products: Product[] = [
       "Why You'll Love It: An elegant coordinated set with long-lasting shine, lightweight comfort, and versatile styling",
     ],
     images: [
-      "/products/Dove/dove-1.png",
-      "/products/Dove/dove-2.png",
-      "/products/Dove/dove-3.png",
-      "/products/Dove/dove-4.png",
+      "/products/Dove/dove-1.webp",
+      "/products/Dove/dove-2.webp",
+      "/products/Dove/dove-3.webp",
+      "/products/Dove/dove-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -658,10 +622,10 @@ export const products: Product[] = [
       "Why You'll Love It: A versatile, lightweight pendant with lasting shine and effortless sparkle",
     ],
     images: [
-      "/products/Halo/Halo-1.png",
-      "/products/Halo/Halo-2.png",
-      "/products/Halo/Halo-3.png",
-      "/products/Halo/Halo-4.png",
+      "/products/Halo/halo-1.webp",
+      "/products/Halo/halo-2.webp",
+      "/products/Halo/halo-3.webp",
+      "/products/Halo/halo-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -682,10 +646,10 @@ export const products: Product[] = [
       "Why You'll Love It: A refined, lightweight pendant with timeless sparkle and versatile styling",
     ],
     images: [
-      "/products/Trinity/Trinity-1.png",
-      "/products/Trinity/Trinity-2.png",
-      "/products/Trinity/Trinity-3.png",
-      "/products/Trinity/Trinity-4.png",
+      "/products/Trinity/trinity-1.webp",
+      "/products/Trinity/trinity-2.webp",
+      "/products/Trinity/trinity-3.webp",
+      "/products/Trinity/trinity-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -706,10 +670,10 @@ export const products: Product[] = [
       "Why You'll Love It: Statement-making movement and sparkle in a lightweight, comfortable design",
     ],
     images: [
-      "/products/Sundrop/Sundrop-1.png",
-      "/products/Sundrop/Sundrop-2.png",
-      "/products/Sundrop/Sundrop-3.png",
-      "/products/Sundrop/Sundrop-4.png",
+      "/products/Sundrop/sundrop-1.webp",
+      "/products/Sundrop/sundrop-2.webp",
+      "/products/Sundrop/sundrop-3.webp",
+      "/products/Sundrop/sundrop-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -730,10 +694,10 @@ export const products: Product[] = [
       "Why You'll Love It: A lightweight, versatile pendant with rich emerald tones and lasting shine",
     ],
     images: [
-      "/products/Evergreen/evergreen-1.png",
-      "/products/Evergreen/evergreen-2.png",
-      "/products/Evergreen/evergreen-3.png",
-      "/products/Evergreen/evergreen-4.png",
+      "/products/Evergreen/evergreen-1.webp",
+      "/products/Evergreen/evergreen-2.webp",
+      "/products/Evergreen/evergreen-3.webp",
+      "/products/Evergreen/evergreen-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -754,10 +718,10 @@ export const products: Product[] = [
       "Why You'll Love It: An elegant everyday piece and a thoughtful gift for birthdays, anniversaries, or someone special",
     ],
     images: [
-      "/products/Loveknot/loveknot-1.png",
-      "/products/Loveknot/loveknot-2.png",
-      "/products/Loveknot/loveknot-3.png",
-      "/products/Loveknot/loveknot-4.png",
+      "/products/Loveknot/loveknot-1.webp",
+      "/products/Loveknot/loveknot-2.webp",
+      "/products/Loveknot/loveknot-3.webp",
+      "/products/Loveknot/loveknot-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -778,10 +742,10 @@ export const products: Product[] = [
       "Why You'll Love It: A minimal, timeless layered look — and a thoughtful gift for birthdays, anniversaries, or someone special",
     ],
     images: [
-      "/products/Duet/duet-1.png",
-      "/products/Duet/duet-2.png",
-      "/products/Duet/duet-3.png",
-      "/products/Duet/duet-4.png",
+      "/products/Duet/duet-1.webp",
+      "/products/Duet/duet-2.webp",
+      "/products/Duet/duet-3.webp",
+      "/products/Duet/duet-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -802,10 +766,10 @@ export const products: Product[] = [
       "Why You'll Love It: Elegant detailing and radiant finish — just the right amount of sparkle for every occasion",
     ],
     images: [
-      "/products/Aarvi/aarvi-1.png",
-      "/products/Aarvi/aarvi-2.png",
-      "/products/Aarvi/aarvi-3.png",
-      "/products/Aarvi/aarvi-4.png",
+      "/products/Aarvi/aarvi-1.webp",
+      "/products/Aarvi/aarvi-2.webp",
+      "/products/Aarvi/aarvi-3.webp",
+      "/products/Aarvi/aarvi-4.webp",
     ],
     badge: "New Launch",
     isNew: true,
@@ -820,36 +784,20 @@ export function getProductById(id: string): Product | undefined {
   return products.find((p) => p.id === id);
 }
 
-export function getStock(productId: string): number {
-  return stockLevels[productId] ?? 0;
-}
-
-export function isInStock(productId: string): boolean {
-  return getStock(productId) > 0;
+// Fisher-Yates shuffle (returns a new array)
+function shuffle<T>(source: T[]): T[] {
+  const result = [...source];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
 }
 
 export function getFeaturedProducts(): Product[] {
-  const featured = products.filter((p) => p.isBestseller || p.isNew);
-  // Shuffle using Fisher-Yates
-  for (let i = featured.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [featured[i], featured[j]] = [featured[j], featured[i]];
-  }
-  return featured.slice(0, 6);
-}export function getShuffledProducts(): Product[] {
-  const shuffled = [...products];
-  // Fisher-Yates shuffle
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+  return shuffle(products.filter((p) => p.isBestseller || p.isNew)).slice(0, 6);
 }
 
-export function getNewArrivals(): Product[] {
-  return products.filter((p) => p.isNew);
-}
-
-export function getBestsellers(): Product[] {
-  return products.filter((p) => p.isBestseller);
+export function getShuffledProducts(): Product[] {
+  return shuffle(products);
 }
