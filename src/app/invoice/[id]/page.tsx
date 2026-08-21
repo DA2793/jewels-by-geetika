@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { createClient } from "@/lib/supabase/client";
 import { generateInvoiceHTML, InvoiceData } from "@/lib/invoice-template";
+import { ADMIN_EMAILS } from "@/lib/admin-emails";
 
 export default function InvoicePage() {
   const params = useParams();
@@ -31,8 +32,7 @@ export default function InvoicePage() {
       }
 
       // Only allow the order owner or admins to view
-      const adminEmails = ["da.2793@yahoo.com", "geetikatyagi75@gmail.com"];
-      if (order.user_id !== user.id && !adminEmails.includes(user.email || "")) {
+      if (order.user_id !== user.id && !ADMIN_EMAILS.includes(user.email || "")) {
         setError("Unauthorized");
         return;
       }

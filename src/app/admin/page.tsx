@@ -5,9 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { createClient } from "@/lib/supabase/client";
-
-// Only these emails can access admin
-const ADMIN_EMAILS = ["da.2793@yahoo.com", "geetikatyagi75@gmail.com"];
+import { ADMIN_EMAILS } from "@/lib/admin-emails";
 
 interface Order {
   id: string;

@@ -1,16 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
-import { createClient } from "@/lib/supabase/client";
-import { validateStock, decrementStock } from "@/lib/stock";
 import { isExpressEligible } from "@/lib/express-pincodes";
-import { validatePromoCode, incrementPromoUsage } from "@/lib/promo-codes";
 
 declare global {
   interface Window {
@@ -45,6 +42,14 @@ export default function CheckoutPage() {
   const shippingCost = baseShippingCost + (expressShipping ? 99 : 0);
   const orderTotal = totalPrice - promoDiscount + shippingCost + (paymentMethod === "cod" ? codFee : 0);
   const [paying, setPaying] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+
+  // Checkout gate — require login (redirect as an effect, not during render)
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/auth/login");
+    }
+  }, [authLoading, user, router]);
 
   // Load Razorpay script
   const loadRazorpayScript = (): Promise<boolean> => {
@@ -63,293 +68,80 @@ export default function CheckoutPage() {
 
   const handlePayment = async () => {
     setPaying(true);
+    setCheckoutError("");
 
-    // Validate stock before payment
-    const stockCheck = await validateStock(
-      items.map((item) => ({ productId: item.product.id, quantity: item.quantity }))
-    );
-    if (!stockCheck.valid) {
-      const productName = items.find((i) => i.product.id === stockCheck.insufficientProduct)?.product.name || "A product";
-      alert(`${productName} only has ${stockCheck.available} piece(s) available. Please update your cart.`);
-      setPaying(false);
-      return;
-    }
+    const payload = {
+      items: items.map((item) => ({ id: item.product.id, quantity: item.quantity })),
+      promoCode: promoApplied || null,
+      expressShipping,
+      paymentMethod,
+      customer: { ...form },
+    };
 
-    // COD Flow — skip Razorpay
-    if (paymentMethod === "cod") {
-      // Decrement stock
-      await decrementStock(
-        items.map((item) => ({ productId: item.product.id, quantity: item.quantity }))
-      );
-
-      // Save order to database
-      let orderId = "";
-      const supabase = createClient();
-      if (supabase && user) {
-        const { data: insertedOrder } = await supabase.from("orders").insert({
-          user_id: user.id,
-          status: "confirmed",
-          total: orderTotal,
-          shipping_cost: shippingCost,
-          cod_fee: codFee,
-          discount: promoDiscount || null,
-          promo_code: promoApplied || null,
-          payment_method: "cod",
-          shipping_name: `${form.firstName} ${form.lastName}`,
-          shipping_email: form.email,
-          shipping_phone: form.phone,
-          shipping_address: form.address,
-          shipping_city: form.city,
-          shipping_state: form.state,
-          shipping_pincode: form.pincode,
-          payment_id: `cod_${Date.now()}`,
-          payment_status: "pending",
-          items: items.map((item) => ({
-            name: item.product.name,
-            quantity: item.quantity,
-            price: item.product.price,
-          })),
-        }).select("id").single();
-        orderId = insertedOrder?.id || "";
-      }
-
-      await markCartRecovered();
-
-      // Increment promo code usage
-      if (promoApplied) {
-        incrementPromoUsage(promoApplied).catch(() => {});
-      }
-
-      // Notify admin via email
-      fetch("/api/notify-order", {
+    // Create the order server-side — prices, promo, and stock are all
+    // computed and validated on the server; nothing here is trusted.
+    let data: any;
+    try {
+      const res = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          order: {
-            payment_id: `cod_${Date.now()}`,
-            payment_method: "cod",
-            total: orderTotal,
-            shipping_cost: shippingCost,
-            shipping_name: `${form.firstName} ${form.lastName}`,
-            shipping_email: form.email,
-            shipping_phone: form.phone,
-            shipping_address: form.address,
-            shipping_city: form.city,
-            shipping_state: form.state,
-            shipping_pincode: form.pincode,
-            items: items.map((item) => ({
-              name: item.product.name,
-              quantity: item.quantity,
-              price: item.product.price,
-            })),
-          },
-        }),
-      }).catch(() => {});
-
-      // Send welcome email if first time (hasn't received one yet)
-      if (form.email) {
-        const welcomeKey = `jbg-welcome-sent-${user?.id}`;
-        if (!localStorage.getItem(welcomeKey)) {
-          localStorage.setItem(welcomeKey, "true");
-          fetch("/api/send-email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              type: "welcome",
-              data: { name: form.firstName, email: form.email },
-            }),
-          }).catch(() => {});
-        }
+        body: JSON.stringify(payload),
+      });
+      data = await res.json();
+      if (!res.ok) {
+        setCheckoutError(data.error || "Could not place order. Please try again.");
+        setPaying(false);
+        return;
       }
-
-      // Send order confirmation to customer
-      if (form.email) {
-        fetch("/api/send-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "order-confirmation",
-            data: {
-              email: form.email,
-              name: form.firstName,
-              orderId: `cod_${Date.now()}`,
-              invoiceUrl: orderId ? `https://www.jewelsbygeetika.com/invoice/${orderId}` : "",
-              total: orderTotal,
-              shippingCost,
-              paymentMethod: "cod",
-              items: items.map((item) => ({
-                name: item.product.name,
-                quantity: item.quantity,
-                price: item.product.price,
-              })),
-            },
-          }),
-        }).catch(() => {});
-      }
-
-      clearCart();
-      router.push("/order-success?id=cod_" + Date.now());
+    } catch {
+      setCheckoutError("Network error. Please check your connection and try again.");
       setPaying(false);
       return;
     }
 
-    // Prepaid Flow — Razorpay
+    // ── COD: order is already finalized server-side ──
+    if (data.paymentMethod === "cod") {
+      await markCartRecovered();
+      clearCart();
+      router.push(`/order-success?id=${data.orderId}`);
+      setPaying(false);
+      return;
+    }
 
+    // ── Prepaid: open Razorpay with the server-created order ──
     const scriptLoaded = await loadRazorpayScript();
     if (!scriptLoaded) {
-      alert("Failed to load payment gateway. Please try again.");
+      setCheckoutError("Failed to load payment gateway. Please try again.");
       setPaying(false);
       return;
     }
 
-    // Create order on server
-    const res = await fetch("/api/create-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount: orderTotal,
-        receipt: `jbg_${Date.now()}`,
-      }),
-    });
-
-    const order = await res.json();
-    if (!order.id) {
-      alert(order.error || "Failed to create order. Please try again.");
-      setPaying(false);
-      return;
-    }
-
-    // Open Razorpay checkout
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: orderTotal * 100,
-      currency: "INR",
+      amount: data.amountPaise,
+      currency: data.currency || "INR",
       name: "Jewels by Geetika",
       description: `Order of ${items.length} item(s)`,
-      order_id: order.id,
-      handler: async (response: any) => {
-        // Verify payment
-        const verifyRes = await fetch("/api/verify-payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(response),
-        });
-        const verification = await verifyRes.json();
-
-        if (verification.verified) {
-          // Decrement stock
-          await decrementStock(
-            items.map((item) => ({ productId: item.product.id, quantity: item.quantity }))
-          );
-
-          // Save order to database
-          let orderId = "";
-          const supabase = createClient();
-          if (supabase && user) {
-            const { data: insertedOrder } = await supabase.from("orders").insert({
-              user_id: user.id,
-              status: "confirmed",
-              total: orderTotal,
-              shipping_cost: shippingCost,
-              discount: promoDiscount || null,
-              promo_code: promoApplied || null,
-              shipping_name: `${form.firstName} ${form.lastName}`,
-              shipping_email: form.email,
-              shipping_phone: form.phone,
-              shipping_address: form.address,
-              shipping_city: form.city,
-              shipping_state: form.state,
-              shipping_pincode: form.pincode,
-              payment_id: response.razorpay_payment_id,
-              payment_status: "paid",
-              items: items.map((item) => ({
-                name: item.product.name,
-                quantity: item.quantity,
-                price: item.product.price,
-              })),
-            }).select("id").single();
-            orderId = insertedOrder?.id || "";
-          }
-
-          // Mark abandoned cart as recovered
-          await markCartRecovered();
-
-          // Increment promo code usage
-          if (promoApplied) {
-            incrementPromoUsage(promoApplied).catch(() => {});
-          }
-
-          // Notify admin via email
-          fetch("/api/notify-order", {
+      order_id: data.razorpayOrderId,
+      handler: async (response: Record<string, string>) => {
+        try {
+          const verifyRes = await fetch("/api/verify-payment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              order: {
-                payment_id: response.razorpay_payment_id,
-                payment_method: "prepaid",
-                total: orderTotal,
-                shipping_cost: shippingCost,
-                shipping_name: `${form.firstName} ${form.lastName}`,
-                shipping_email: form.email,
-                shipping_phone: form.phone,
-                shipping_address: form.address,
-                shipping_city: form.city,
-                shipping_state: form.state,
-                shipping_pincode: form.pincode,
-                items: items.map((item) => ({
-                  name: item.product.name,
-                  quantity: item.quantity,
-                  price: item.product.price,
-                })),
-              },
-            }),
-          }).catch(() => {});
+            body: JSON.stringify(response),
+          });
+          const verification = await verifyRes.json();
 
-          // Send welcome email if first time
-          if (form.email) {
-            const welcomeKey = `jbg-welcome-sent-${user?.id}`;
-            if (!localStorage.getItem(welcomeKey)) {
-              localStorage.setItem(welcomeKey, "true");
-              fetch("/api/send-email", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  type: "welcome",
-                  data: { name: form.firstName, email: form.email },
-                }),
-              }).catch(() => {});
-            }
+          if (verification.verified) {
+            await markCartRecovered();
+            clearCart();
+            router.push(`/order-success?id=${verification.orderId || response.razorpay_payment_id}`);
+          } else {
+            setCheckoutError("Payment verification failed. If money was deducted, please contact support — your order will be recorded automatically.");
           }
-
-          // Send order confirmation to customer
-          if (form.email) {
-            fetch("/api/send-email", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                type: "order-confirmation",
-                data: {
-                  email: form.email,
-                  name: form.firstName,
-                  orderId: response.razorpay_payment_id,
-                  invoiceUrl: orderId ? `https://www.jewelsbygeetika.com/invoice/${orderId}` : "",
-                  total: orderTotal,
-                  shippingCost,
-                  paymentMethod: "prepaid",
-                  items: items.map((item) => ({
-                    name: item.product.name,
-                    quantity: item.quantity,
-                    price: item.product.price,
-                  })),
-                },
-              }),
-            }).catch(() => {});
-          }
-
-          clearCart();
-          router.push("/order-success?id=" + response.razorpay_payment_id);
-        } else {
-          alert("Payment verification failed. Please contact support.");
+        } catch {
+          // Payment went through; the webhook will record the order.
+          router.push(`/order-success?id=${response.razorpay_payment_id}`);
         }
         setPaying(false);
       },
@@ -379,9 +171,8 @@ export default function CheckoutPage() {
     }
   };
 
-  // Checkout gate — require login
+  // While redirecting to login, show a spinner
   if (!authLoading && !user) {
-    router.push("/auth/login");
     return (
       <div className="pt-32 pb-16 bg-cream-50 min-h-screen flex items-center justify-center">
         <div className="inline-block w-8 h-8 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
@@ -687,20 +478,25 @@ export default function CheckoutPage() {
                     <button
                       onClick={async () => {
                         if (!promoInput.trim()) return;
-                        // Check if user has order history (for first-time-only codes)
-                        let hasOrders = false;
-                        const supabase = createClient();
-                        if (supabase && user) {
-                          const { data } = await supabase.from("orders").select("id").eq("user_id", user.id).limit(1);
-                          hasOrders = (data && data.length > 0) || false;
-                        }
-                        const result = await validatePromoCode(promoInput, totalPrice, hasOrders);
-                        if (result.valid && result.discount) {
-                          setPromoDiscount(result.discount);
-                          setPromoApplied(promoInput.trim().toUpperCase());
-                          setPromoError("");
-                        } else {
-                          setPromoError(result.error || "Invalid code");
+                        try {
+                          const res = await fetch("/api/validate-promo", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              code: promoInput,
+                              items: items.map((item) => ({ id: item.product.id, quantity: item.quantity })),
+                            }),
+                          });
+                          const result = await res.json();
+                          if (result.valid && result.discount) {
+                            setPromoDiscount(result.discount);
+                            setPromoApplied(promoInput.trim().toUpperCase());
+                            setPromoError("");
+                          } else {
+                            setPromoError(result.error || "Invalid code");
+                          }
+                        } catch {
+                          setPromoError("Could not validate code. Please try again.");
                         }
                       }}
                       className="px-4 py-2 bg-charcoal-800 text-white text-xs uppercase tracking-wider rounded-xl hover:bg-gold-600 transition-colors"
@@ -839,6 +635,13 @@ export default function CheckoutPage() {
                   </motion.div>
                 )}
               </div>
+
+              {/* Checkout error */}
+              {checkoutError && (
+                <div className="mt-4 py-3 px-4 bg-red-50 border border-red-100 rounded-xl" role="alert">
+                  <p className="text-red-600 text-sm">{checkoutError}</p>
+                </div>
+              )}
 
               {/* Pay / Place Order Button */}
               {paymentMethod === "prepaid" ? (
