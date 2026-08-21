@@ -31,7 +31,11 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "Jewels by Geetika | Luxury Curated Jewellery",
+  metadataBase: new URL("https://www.jewelsbygeetika.com"),
+  title: {
+    default: "Jewels by Geetika | Luxury Curated Jewellery",
+    template: "%s | Jewels by Geetika",
+  },
   description:
     "Thoughtfully curated luxury jewellery for women who love timeless elegance, modern glamour & effortless sophistication. Necklaces, rings, and bridal sets.",
   keywords: [
@@ -48,11 +52,24 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logo.png",
   },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Jewels by Geetika | Luxury Curated Jewellery",
     description:
       "Thoughtfully curated luxury jewellery for women who love timeless elegance, modern glamour & effortless sophistication.",
     type: "website",
+    url: "https://www.jewelsbygeetika.com",
+    siteName: "Jewels by Geetika",
+    images: [{ url: "/logo.png", width: 512, height: 512, alt: "Jewels by Geetika" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jewels by Geetika | Luxury Curated Jewellery",
+    description:
+      "Thoughtfully curated luxury jewellery for women who love timeless elegance, modern glamour & effortless sophistication.",
+    images: ["/logo.png"],
   },
 };
 
