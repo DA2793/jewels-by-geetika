@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# private business data — never commit (ledgers, invoices, credentials, marketing assets)
+/business/
+Google Console.jpg
+
 # debug
 npm-debug.log*
 yarn-debug.log*
