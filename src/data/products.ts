@@ -11,34 +11,9 @@ export interface Product {
   badge?: string;
   isNew?: boolean;
   isBestseller?: boolean;
-  stock?: number;
 }
 
-// Stock levels - update these when restocking
-const stockLevels: Record<string, number> = {
-  "1": 2,  // Kaveri
-  "2": 1,  // Raahi
-  "3": 2,  // Saanjh
-  "4": 2,  // Adaa
-  "5": 2,  // Ruhani
-  "6": 2,  // Kanak
-  "7": 2,  // Sunehri
-  "8": 1,  // Virasat
-  "9": 2,  // Antara
-  "10": 2, // Chandni
-  "11": 2, // Rajsi
-  "12": 2, // Bella
-  "13": 2, // Blossom
-  "14": 2, // Ziya
-  "15": 1, // Grace
-  "16": 2, // Iris
-  "17": 2, // Stella
-  "18": 2, // Hope
-  "19": 2, // Luna
-  "20": 2, // Lily
-  "21": 2, // Daisy
-  "22": 2, // Zahara
-};
+// NOTE: Stock is managed in Supabase (see src/lib/stock.ts), not here.
 
 export type Category =
   | "necklaces"
@@ -116,7 +91,6 @@ export const products: Product[] = [
       "/products/Kaveri/kaveri-3.png",
       "/products/Kaveri/kaveri-4.png",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -140,7 +114,6 @@ export const products: Product[] = [
       "/products/Raahi/raahi-3.png",
       "/products/Raahi/raahi-4.png",
     ],
-    // badge removed,
   },
   {
     id: "3",
@@ -163,7 +136,6 @@ export const products: Product[] = [
       "/products/Saanjh/saanjh-3.png",
       "/products/Saanjh/saanjh-4.png",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -187,7 +159,6 @@ export const products: Product[] = [
       "/products/Adaa/adaa-3.png",
       "/products/Adaa/adaa-4.png",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -211,7 +182,6 @@ export const products: Product[] = [
       "/products/Ruhani/ruhani-3.png",
       "/products/Ruhani/ruhani-4.png",
     ],
-    // badge removed,
   },
   {
     id: "6",
@@ -234,7 +204,6 @@ export const products: Product[] = [
       "/products/Kanak/kanak-3.png",
       "/products/Kanak/kanak-4.png",
     ],
-    // badge removed,
   },
   {
     id: "7",
@@ -256,7 +225,6 @@ export const products: Product[] = [
       "/products/Sunehri/sunehri-3.png",
       "/products/Sunehri/sunehri-4.png",
     ],
-    // badge removed,
   },
   {
     id: "8",
@@ -278,7 +246,6 @@ export const products: Product[] = [
       "/products/Virasat/virasat-3.png",
       "/products/Virasat/virasat-4.png",
     ],
-    // badge removed,
   },
   {
     id: "9",
@@ -301,7 +268,6 @@ export const products: Product[] = [
       "/products/Antara/antara-3.png",
       "/products/Antara/antara-4.png",
     ],
-    // badge removed,
     isBestseller: true,
   },
   {
@@ -325,7 +291,6 @@ export const products: Product[] = [
       "/products/Chandni/chandni-3.png",
       "/products/Chandni/chandni-4.png",
     ],
-    // badge removed,
   },
   {
     id: "11",
@@ -348,7 +313,6 @@ export const products: Product[] = [
       "/products/Rajsi/rajsi-3.png",
       "/products/Rajsi/rajsi-4.png",
     ],
-    // badge removed,
   },
   {
     id: "12",
@@ -820,36 +784,20 @@ export function getProductById(id: string): Product | undefined {
   return products.find((p) => p.id === id);
 }
 
-export function getStock(productId: string): number {
-  return stockLevels[productId] ?? 0;
-}
-
-export function isInStock(productId: string): boolean {
-  return getStock(productId) > 0;
+// Fisher-Yates shuffle (returns a new array)
+function shuffle<T>(source: T[]): T[] {
+  const result = [...source];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
 }
 
 export function getFeaturedProducts(): Product[] {
-  const featured = products.filter((p) => p.isBestseller || p.isNew);
-  // Shuffle using Fisher-Yates
-  for (let i = featured.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [featured[i], featured[j]] = [featured[j], featured[i]];
-  }
-  return featured.slice(0, 6);
-}export function getShuffledProducts(): Product[] {
-  const shuffled = [...products];
-  // Fisher-Yates shuffle
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+  return shuffle(products.filter((p) => p.isBestseller || p.isNew)).slice(0, 6);
 }
 
-export function getNewArrivals(): Product[] {
-  return products.filter((p) => p.isNew);
-}
-
-export function getBestsellers(): Product[] {
-  return products.filter((p) => p.isBestseller);
+export function getShuffledProducts(): Product[] {
+  return shuffle(products);
 }
