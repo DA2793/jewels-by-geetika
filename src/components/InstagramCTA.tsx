@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const instagramImages = [
-  "/products/Kaveri/kaveri-1.png",
-  "/products/Raahi/raahi-3.png",
-  "/products/Ruhani/ruhani-3.png",
-  "/products/Kanak/kanak-3.png",
-  "/products/Sunehri/sunehri-1.png",
-  "/products/Virasat/virasat-1.png",
+  "/products/Kaveri/kaveri-1.webp",
+  "/products/Raahi/raahi-3.webp",
+  "/products/Ruhani/ruhani-3.webp",
+  "/products/Kanak/kanak-3.webp",
+  "/products/Sunehri/sunehri-1.webp",
+  "/products/Virasat/virasat-1.webp",
 ];
 
 export default function InstagramCTA() {
