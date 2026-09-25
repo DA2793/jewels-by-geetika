@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jewels by Geetika
 
-## Getting Started
+E-commerce site for [jewelsbygeetika.com](https://www.jewelsbygeetika.com) — Next.js 14 (App Router), Supabase (auth + DB), Razorpay (payments), Resend (email). Deployed on Vercel from `main`.
 
-First, run the development server:
+The full project handbook (architecture, data model, business rules, conventions, known gaps) lives at
+[`.kiro/steering/jbg-handbook.md`](.kiro/steering/jbg-handbook.md). Read it first.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Set up on a new machine
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Install Node.js 20 LTS or newer, then:
+   ```bash
+   git clone https://github.com/DA2793/jewels-by-geetika.git
+   cd jewels-by-geetika
+   npm install
+   ```
+2. Copy `.env.local.example` to `.env.local` and fill in the real values
+   (Supabase, Razorpay, Resend). Without `SUPABASE_SERVICE_ROLE_KEY` checkout returns
+   "Checkout is temporarily unavailable".
+3. Restore the private, non-git folders from the old machine (see handbook §12):
+   `business/` and the two credential screenshots at the repo root.
+4. Verify:
+   ```bash
+   npx tsc --noEmit
+   npm run build
+   npm run dev      # http://localhost:3000
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` — dev server
+- `npm run build` — production build (must pass before pushing)
+- `npm run start` — serve the production build
+- `npm run lint` — eslint
 
-## Learn More
+## Database
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`supabase/schema.sql` is the original bootstrap and is **stale**; `supabase/migrations/` holds later
+changes applied to the live project. The live Supabase database is the source of truth — see handbook §5
+for the objects that exist only there.

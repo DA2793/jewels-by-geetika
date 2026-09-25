@@ -38,7 +38,7 @@ export default function BrandStory() {
                   className="w-full h-full bg-cover bg-center"
                   style={{
                     backgroundImage:
-                      "url('/products/Saanjh/saanjh-3.png')",
+                      "url('/products/Saanjh/saanjh-3.webp')",
                   }}
                 />
               </motion.div>
@@ -53,7 +53,7 @@ export default function BrandStory() {
                   className="w-full h-full bg-cover bg-center"
                   style={{
                     backgroundImage:
-                      "url('/products/Adaa/adaa-3.png')",
+                      "url('/products/Adaa/adaa-3.webp')",
                   }}
                 />
               </motion.div>
