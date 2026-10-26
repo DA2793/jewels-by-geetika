@@ -104,7 +104,7 @@ interface Product {
 - Ids are numeric strings "1"–"30", hand-assigned, must match the
   `stock.product_id` rows in Supabase.
 
-### Catalog snapshot (Sept 2026)
+### Catalog snapshot (Oct 2026)
 | id | name | ₹ | categories | flags |
 |---|---|---|---|---|
 | 1 | Kaveri Necklace Set | 1999 | necklaces, bridal-sets | bestseller |
@@ -118,34 +118,40 @@ interface Product {
 | 9 | Antara Temple Necklace Set | 3999 | necklaces, bridal-sets | bestseller |
 | 10 | Chandni Necklace Set | 3999 | necklaces, american-diamond | |
 | 11 | Rajsi Necklace Set | 2999 | necklaces, bridal-sets, american-diamond | |
-| 12 | Bella Necklace | 1999 | anti-tarnish, necklaces | New Launch, bestseller |
-| 13 | Blossom Necklace | 1499 | anti-tarnish | New Launch |
-| 14 | Ziya Earrings | 1499 | earrings, anti-tarnish | New Launch |
-| 15 | Grace Earrings | 1499 | earrings | New Launch, bestseller |
-| 16 | Iris Earrings | 1999 | earrings | New Launch |
-| 17 | Stella Necklace | 2999 | anti-tarnish | New Launch, bestseller |
-| 18 | Hope Necklace | 2499 | anti-tarnish | New Launch |
-| 19 | Luna Necklace | 1499 | anti-tarnish | New Launch |
-| 20 | Lily Necklace | 1499 | anti-tarnish | New Launch |
-| 21 | Daisy Bracelet | 1499 | bracelets, anti-tarnish | New Launch |
-| 22 | Zahara Bracelet | 999 | bracelets | New Launch, bestseller |
-| 23 | Dove Necklace Set | 1499 | anti-tarnish | New Launch |
-| 24 | Halo Pendant | 1199 | anti-tarnish | New Launch |
-| 25 | Trinity Pendant | 1199 | anti-tarnish | New Launch |
-| 26 | Sundrop Earrings | 1499 | earrings | New Launch |
-| 27 | Evergreen Pendant | 1199 | anti-tarnish | New Launch |
-| 28 | Loveknot Pendant | 1199 | anti-tarnish | New Launch |
-| 29 | Duet Necklace | 1199 | anti-tarnish | New Launch |
-| 30 | Aarvi Bracelet & Ring Set | 1249 | bracelets, rings, anti-tarnish | New Launch |
+| 12 | Bella Necklace | 1999 | anti-tarnish, necklaces | bestseller |
+| 13 | Blossom Necklace | 1499 | anti-tarnish | |
+| 14 | Ziya Earrings | 1499 | earrings, anti-tarnish | |
+| 15 | Grace Earrings | 1499 | earrings | bestseller |
+| 16 | Iris Earrings | 1999 | earrings | |
+| 17 | Stella Necklace | 2999 | anti-tarnish | bestseller |
+| 18 | Hope Necklace | 2499 | anti-tarnish | |
+| 19 | Luna Necklace | 1499 | anti-tarnish | |
+| 20 | Lily Necklace | 1499 | anti-tarnish | |
+| 21 | Daisy Bracelet | 1499 | bracelets, anti-tarnish | |
+| 22 | Zahara Bracelet | 999 | bracelets | bestseller |
+| 23 | Dove Necklace Set | 1499 | anti-tarnish | |
+| 24 | Halo Pendant | 1199 | anti-tarnish | |
+| 25 | Trinity Pendant | 1199 | anti-tarnish | |
+| 26 | Sundrop Earrings | 1499 | earrings | |
+| 27 | Evergreen Pendant | 1199 | anti-tarnish | |
+| 28 | Loveknot Pendant | 1199 | anti-tarnish | |
+| 29 | Duet Necklace | 1199 | anti-tarnish | |
+| 30 | Aarvi Bracelet & Ring Set | 1249 | bracelets, rings, anti-tarnish | |
+| 31 | Rajnandni Choker Set | 5499 | necklaces, bridal-sets | New Launch |
+| 32 | Mohini Necklace Set | 2499 | necklaces, bridal-sets | New Launch |
+| 33 | Gauri Earcuffs | 1599 | earrings | New Launch |
+| 34 | Devshree Choker Set | 2499 | necklaces, bridal-sets | New Launch |
+| 35 | Mayura Earcuffs | 999 | earrings | New Launch |
+| 36 | Padmini Necklace Set | 2999 | necklaces, bridal-sets | New Launch |
 
-Ids 12–30 all carry `badge: "New Launch"` + `isNew` (the anti-tarnish launch
-wave). No product sets `originalPrice`. Iris Earrings (16) was sold offline at
-₹1,499 against a ₹1,999 list price — recorded as a ₹500 discount, not a price change.
+Ids 31–36 all carry `badge: "New Launch"` + `isNew`. No product sets
+`originalPrice`. Iris Earrings (16) was sold offline at ₹1,499 against a ₹1,999
+list price — recorded as a ₹500 discount, not a price change.
 
 ### Adding a product (checklist)
 1. Add 4 WebP images to `public/products/<Name>/`.
 2. Append the entry in `products.ts` with the next id.
-3. Insert a `stock` row in Supabase: `insert into stock (product_id, quantity) values ('31', N);`
+3. Insert a `stock` row in Supabase: `insert into stock (product_id, quantity) values ('37', N);`
    — without it, checkout says "Could not verify stock".
 4. `product/[id]/layout.tsx` picks up metadata/JSON-LD and `sitemap.ts` the URL automatically.
 

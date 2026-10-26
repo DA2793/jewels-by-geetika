@@ -335,8 +335,6 @@ export const products: Product[] = [
       "/products/Bella/bella-3.webp",
       "/products/Bella/bella-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
     isBestseller: true,
   },
   {
@@ -360,8 +358,6 @@ export const products: Product[] = [
       "/products/Blossom/blossom-3.webp",
       "/products/Blossom/blossom-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "14",
@@ -384,8 +380,6 @@ export const products: Product[] = [
       "/products/Ziya/ziya-3.webp",
       "/products/Ziya/ziya-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "15",
@@ -408,8 +402,6 @@ export const products: Product[] = [
       "/products/Grace/grace-3.webp",
       "/products/Grace/grace-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
     isBestseller: true,
   },
   {
@@ -433,8 +425,6 @@ export const products: Product[] = [
       "/products/Iris/iris-3.webp",
       "/products/Iris/iris-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "17",
@@ -457,8 +447,6 @@ export const products: Product[] = [
       "/products/Stella/stella-3.webp",
       "/products/Stella/stella-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
     isBestseller: true,
   },
   {
@@ -482,8 +470,6 @@ export const products: Product[] = [
       "/products/Hope/hope-3.webp",
       "/products/Hope/hope-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "19",
@@ -506,8 +492,6 @@ export const products: Product[] = [
       "/products/Luna/luna-3.webp",
       "/products/Luna/luna-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "20",
@@ -530,8 +514,6 @@ export const products: Product[] = [
       "/products/Lily/lily-3.webp",
       "/products/Lily/lily-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "21",
@@ -554,8 +536,6 @@ export const products: Product[] = [
       "/products/Daisy/daisy-3.webp",
       "/products/Daisy/daisy-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "22",
@@ -578,8 +558,6 @@ export const products: Product[] = [
       "/products/Zahara/zahara-3.webp",
       "/products/Zahara/zahara-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
     isBestseller: true,
   },
   {
@@ -603,8 +581,6 @@ export const products: Product[] = [
       "/products/Dove/dove-3.webp",
       "/products/Dove/dove-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "24",
@@ -627,8 +603,6 @@ export const products: Product[] = [
       "/products/Halo/halo-3.webp",
       "/products/Halo/halo-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "25",
@@ -651,8 +625,6 @@ export const products: Product[] = [
       "/products/Trinity/trinity-3.webp",
       "/products/Trinity/trinity-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "26",
@@ -675,8 +647,6 @@ export const products: Product[] = [
       "/products/Sundrop/sundrop-3.webp",
       "/products/Sundrop/sundrop-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "27",
@@ -699,8 +669,6 @@ export const products: Product[] = [
       "/products/Evergreen/evergreen-3.webp",
       "/products/Evergreen/evergreen-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "28",
@@ -723,8 +691,6 @@ export const products: Product[] = [
       "/products/Loveknot/loveknot-3.webp",
       "/products/Loveknot/loveknot-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "29",
@@ -747,8 +713,6 @@ export const products: Product[] = [
       "/products/Duet/duet-3.webp",
       "/products/Duet/duet-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "30",
@@ -771,8 +735,6 @@ export const products: Product[] = [
       "/products/Aarvi/aarvi-3.webp",
       "/products/Aarvi/aarvi-4.webp",
     ],
-    badge: "New Launch",
-    isNew: true,
   },
   {
     id: "31",
